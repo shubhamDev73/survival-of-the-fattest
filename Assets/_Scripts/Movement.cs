@@ -11,10 +11,11 @@ public class Movement : MonoBehaviour {
 	private float speed = 100f, bulletSpeed = 2000f;
 	private String p;
 	[@HideInInspector]
-	public Vector3 scale = new Vector3(1, 1, 1);
+	public Vector3 scale;
 
 	void Start () {
 		p = " Player" + player.ToString();
+		scale = transform.localScale;
 	}
 
 	void FixedUpdate () {
@@ -35,7 +36,7 @@ public class Movement : MonoBehaviour {
 			Destroy(bullet, 2);
 			scale -= new Vector3(0.1f, 0.1f, 0.1f);
 		}
-		if(scale.x <= 0){
+		if(scale.x <= 0.4f){
 			Die();
 		}
 	}
