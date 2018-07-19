@@ -1,4 +1,4 @@
-﻿// using System;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
@@ -61,9 +61,16 @@ public class Movement : MonoBehaviour {
 	}
 
 	void Die () {
+		transform.position = new Vector3(1000, 1000, 1000);
+		StartCoroutine("Respawn");
+	}
+
+	IEnumerator Respawn () {
+		yield return new WaitForSeconds(0.5f);
 		rb.velocity = Vector3.zero;
+		transform.localScale = new Vector3(1, 1, 1);
+		scale = transform.localScale;
 		transform.position = respawnPoint.position;
-		transform.localScale = scale = new Vector3(1, 1, 1);
 		rb.AddForce(new Vector3(Random.Range(3000f, 7000f), 0, 0), ForceMode.Acceleration);
 	}
 
