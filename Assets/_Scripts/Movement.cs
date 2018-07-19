@@ -1,38 +1,36 @@
-﻿using System;
+﻿// using System;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
 	public int player;
 	public GameObject bulletPrefab;
-	public Transform spawnPoint;
+	public Transform spawnPoint, respawnPoint;
 	public Vector3 bulletDirection;
 
-	private float speed = 100f, bulletSpeed = 2000f;
+	private float speed, bulletSpeed = 2000f;
 	private Rigidbody rb;
-	private String p;
 	[@HideInInspector]
 	public Vector3 scale;
 
 	void Start () {
-		p = player.ToString();
 		scale = transform.localScale;
 		rb = GetComponent<Rigidbody>();
 	}
 
 	void FixedUpdate () {
-		rb.AddForce(new Vector3(Input.GetAxis("Horizontal Player" + p) * speed, 0, -Input.GetAxis("Vertical Player" + p) * speed), ForceMode.Acceleration);
+		speed = 300 - transform.localScale.x * 100;
+		rb.AddForce(new Vector3(Input.GetAxis("Horizontal Player" + player.ToString()) * speed, 0, -Input.GetAxis("Vertical Player" + player.ToString()) * speed), ForceMode.Acceleration);
 		transform.localScale = Vector3.Lerp(transform.localScale, scale, (transform.localScale - scale).magnitude * 0.5f);
 		transform.position = new Vector3(transform.position.x, transform.localScale.x/2, transform.position.z);
-		speed = 200 - transform.localScale.x * 75;
 	}
 
 	void Update () {
-		if(Input.GetKeyDown("joystick " + p + " button 2")){
+		if(Input.GetKeyDown("joystick " + player.ToString() + " button 2")){
 			Spawn(bulletSpeed, 2);
 			scale -= new Vector3(0.05f, 0.05f, 0.05f);
 		}
-		if(scale.x > 0.75f && Input.GetKeyDown("joystick " + p + " button 1")){
+		if(scale.x > 0.75f && Input.GetKeyDown("joystick " + player.ToString() + " button 1")){
 			Spawn(bulletSpeed * 2, 30);
 			scale -= new Vector3(0.25f, 0.25f, 0.25f);
 		}
@@ -48,7 +46,7 @@ public class Movement : MonoBehaviour {
 		Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GameObject.Find("Divider").GetComponent<Collider>());
 		bullet.GetComponent<Rigidbody>().mass = mass;
 		bullet.GetComponent<Rigidbody>().AddForce(bulletDirection * bulletSpeed, ForceMode.Acceleration);
-		Destroy(bullet, 2);
+		Destroy(bullet, 1);
 	}
 
 	void OnTriggerEnter (Collider col) {
@@ -57,14 +55,16 @@ public class Movement : MonoBehaviour {
 				Die();
 				break;
 			case "Farm":
-				Debug.Log(rb.velocity);
 				rb.AddForce(rb.velocity * -3, ForceMode.VelocityChange);
 				break;
 		}
 	}
 
 	void Die () {
-		Destroy(gameObject);
+		rb.velocity = Vector3.zero;
+		transform.position = respawnPoint.position;
+		transform.localScale = scale = new Vector3(1, 1, 1);
+		rb.AddForce(new Vector3(Random.Range(3000f, 7000f), 0, 0), ForceMode.Acceleration);
 	}
 
 }
