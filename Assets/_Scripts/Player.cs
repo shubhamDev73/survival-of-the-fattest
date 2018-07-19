@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
+		if(Time.timeScale == 0) return;
 		if(Input.GetKeyDown("joystick " + player.ToString() + " button 2")){
 			Spawn(bulletSpeed, 2);
 			scale -= new Vector3(0.05f, 0.05f, 0.05f);
