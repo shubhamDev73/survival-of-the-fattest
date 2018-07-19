@@ -367,8 +367,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 2
-  speed: 100
-  bulletSpeed: 1000
   bulletPrefab: {fileID: 1924338026517444, guid: a207b5de0091ba744bd405b41ef04906,
     type: 2}
   spawnPoint: {fileID: 1581282021}
@@ -612,8 +610,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 1
-  speed: 100
-  bulletSpeed: 1000
   bulletPrefab: {fileID: 1924338026517444, guid: a207b5de0091ba744bd405b41ef04906,
     type: 2}
   spawnPoint: {fileID: 1158606976}
