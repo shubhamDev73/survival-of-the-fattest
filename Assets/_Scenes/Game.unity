@@ -4878,8 +4878,8 @@ GameObject:
   - component: {fileID: 480130840}
   - component: {fileID: 480130841}
   m_Layer: 0
-  m_Name: RightWall
-  m_TagString: Untagged
+  m_Name: RightFarm
+  m_TagString: Farm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4892,7 +4892,7 @@ Transform:
   m_GameObject: {fileID: 480130839}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.5, y: 5, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 10, z: 20}
+  m_LocalScale: {x: 1, y: 10, z: 20}
   m_Children: []
   m_Father: {fileID: 2034904420}
   m_RootOrder: 2
@@ -4904,7 +4904,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 480130839}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -4919,8 +4919,8 @@ GameObject:
   - component: {fileID: 513272695}
   - component: {fileID: 513272696}
   m_Layer: 0
-  m_Name: TopDeath
-  m_TagString: Untagged
+  m_Name: TopGrinder
+  m_TagString: Grinder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4933,7 +4933,7 @@ Transform:
   m_GameObject: {fileID: 513272694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 5, z: 10}
-  m_LocalScale: {x: 15, y: 10, z: 0.19999999}
+  m_LocalScale: {x: 15, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 2034904420}
   m_RootOrder: 3
@@ -4945,7 +4945,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 513272694}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -4961,7 +4961,7 @@ GameObject:
   - component: {fileID: 663332812}
   m_Layer: 0
   m_Name: Divider
-  m_TagString: Untagged
+  m_TagString: Farm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4973,7 +4973,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 663332811}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -5121,8 +5121,8 @@ GameObject:
   - component: {fileID: 830775981}
   - component: {fileID: 830775982}
   m_Layer: 0
-  m_Name: BottomDeath
-  m_TagString: Untagged
+  m_Name: BottomGrinder
+  m_TagString: Grinder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5135,7 +5135,7 @@ Transform:
   m_GameObject: {fileID: 830775980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 5, z: -10}
-  m_LocalScale: {x: 15, y: 10, z: 0.19999999}
+  m_LocalScale: {x: 15, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 2034904420}
   m_RootOrder: 4
@@ -5147,7 +5147,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 830775980}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -5190,8 +5190,8 @@ GameObject:
   - component: {fileID: 1300707701}
   - component: {fileID: 1300707702}
   m_Layer: 0
-  m_Name: LeftWall
-  m_TagString: Untagged
+  m_Name: LeftFarm
+  m_TagString: Farm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5204,7 +5204,7 @@ Transform:
   m_GameObject: {fileID: 1300707700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7.5, y: 5, z: 0}
-  m_LocalScale: {x: 0.2, y: 10, z: 20}
+  m_LocalScale: {x: 1, y: 10, z: 20}
   m_Children: []
   m_Father: {fileID: 2034904420}
   m_RootOrder: 1
@@ -5216,7 +5216,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1300707700}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
