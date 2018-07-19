@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooter: {fileID: 0}
+  explosionPrefab: {fileID: 1948368566958820, guid: a00b25a0f6f926c4eb1d77edee5a7a6f,
+    type: 2}
