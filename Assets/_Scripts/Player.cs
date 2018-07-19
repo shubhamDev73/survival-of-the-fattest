@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate () {
 		speed = 300 - transform.localScale.x * 100;
-		rb.AddForce(new Vector3(Input.GetAxis("Horizontal Player" + player.ToString()) * speed, 0, -Input.GetAxis("Vertical Player" + player.ToString()) * speed), ForceMode.Acceleration);
+		rb.AddForce(new Vector3(Input.GetAxis("Horizontal Player" + player.ToString()) * speed, 0, Input.GetAxis("Vertical Player" + player.ToString()) * speed), ForceMode.Acceleration);
 		transform.localScale = Vector3.Lerp(transform.localScale, scale, (transform.localScale - scale).magnitude * 0.5f);
 		transform.position = new Vector3(transform.position.x, transform.localScale.x/2, transform.position.z);
 	}
