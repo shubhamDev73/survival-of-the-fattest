@@ -41,11 +41,15 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 		if(Time.timeScale == 0) return;
-		if(Input.GetKeyDown("joystick " + player.ToString() + " button 2")){
+
+		// shoot
+		if(Input.GetKeyDown(player > 10 ? (player == 11 ? "space" : "return") : ("joystick " + player.ToString() + " button 2"))){
 			Spawn(bulletSpeed, 2);
 			scale -= new Vector3(0.05f, 0.05f, 0.05f);
 		}
-		if(scale.x > 0.75f && Input.GetKeyDown("joystick " + player.ToString() + " button 1")){
+
+		// charged shoot
+		if(scale.x > 0.75f && Input.GetKeyDown(player > 10 ? (player == 11 ? "left ctrl" : "right ctrl") : ("joystick " + player.ToString() + " button 1"))){
 			Spawn(bulletSpeed * 2, 30);
 			scale -= new Vector3(0.25f, 0.25f, 0.25f);
 		}

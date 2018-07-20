@@ -13,18 +13,26 @@ public class CreatePlayers : MonoBehaviour {
 			joystickNumber++;
 			if(joystick != ""){
 				count++;
-				GameObject text = Instantiate(playerText);
-				text.transform.SetParent(transform.GetChild(4));
-				RectTransform rt = text.GetComponent<RectTransform>();
-				rt.anchorMin = new Vector2(0.5f, 0.7f - count * 0.2f);
-				rt.anchorMax = new Vector2(0.5f, 0.7f - count * 0.2f);
-				rt.anchoredPosition = new Vector2(0, 0);
-				rt.localScale = new Vector3(1, 1, 1);
-				rt.GetComponent<SelectAnimal>().joystickNumber = joystickNumber;
-				rt.GetComponent<Text>().text = "Player " + count.ToString();
+				CreateText(count, joystickNumber);
 			}
 		}
+		for(int i = 0; i < 2; i++){
+			count++;
+			CreateText(count, 11 + i);
+		}
 		FindObjectOfType<EventSystem>().SetSelectedGameObject(transform.GetChild(5).gameObject);
+	}
+
+	void CreateText (int count, int joystickNumber) {
+		GameObject text = Instantiate(playerText);
+		text.transform.SetParent(transform.GetChild(4));
+		RectTransform rt = text.GetComponent<RectTransform>();
+		rt.anchorMin = new Vector2(0.5f, 0.65f - count * 0.1f);
+		rt.anchorMax = new Vector2(0.5f, 0.65f - count * 0.1f);
+		rt.anchoredPosition = new Vector2(0, 0);
+		rt.localScale = new Vector3(1, 1, 1);
+		rt.GetComponent<Text>().text = "Player " + count.ToString();
+		rt.GetComponent<SelectAnimal>().joystickNumber = joystickNumber;
 	}
 
 }

@@ -5,19 +5,26 @@ public class UI : MonoBehaviour {
 
 	public void LoadLevel (string level) {
 		if(level == "Game"){
-			int[] selectedPlayers = new int[FindObjectsOfType<SelectAnimal>().Length];
+			int[] selectedPlayers = new int[2];
 			for(int i = 0; i < selectedPlayers.Length; i++) selectedPlayers[i] = -1;
 			int count = 0;
 			foreach(SelectAnimal script in FindObjectsOfType<SelectAnimal>()){
-				if(Mathf.Abs(script.player - 0.5f) < 0.01f || script.player < 0) return;
+
+				// neglecting centered inputs
+				if(script.player == -1)
+					continue;
+
 				for(int i = 0; i < selectedPlayers.Length; i++)
-					if(selectedPlayers[i] == (int)script.player)
+					// more than 1 player trying to select same animal
+					if(selectedPlayers[i] == script.player)
 						return;
-				GameManager.players[(int)script.player] = script.joystickNumber;
-				selectedPlayers[count] = (int)script.player;
+
+				GameManager.players[script.player] = script.joystickNumber;
+				selectedPlayers[count] = script.player;
 				count++;
 			}
 			for(int i = 0; i < selectedPlayers.Length; i++)
+				// some animal is left out
 				if(selectedPlayers[i] == -1)
 					return;
 		}

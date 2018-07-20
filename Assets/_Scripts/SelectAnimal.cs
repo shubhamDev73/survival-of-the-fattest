@@ -6,7 +6,7 @@ public class SelectAnimal : MonoBehaviour {
 	[@HideInInspector]
 	public int joystickNumber;
 	[@HideInInspector]
-	public float player = 0.5f;
+	public int player = -1;
 
 	private bool moved;
 
@@ -24,7 +24,8 @@ public class SelectAnimal : MonoBehaviour {
 					rt.anchorMax = new Vector2(Mathf.Clamp(rt.anchorMax.x + 0.25f, 0.5f, 0.75f), rt.anchorMax.y);
 					rt.anchoredPosition = new Vector2(0, 0);
 				}
-				player = (rt.anchorMin.x - 0.25f) * 2f;
+				player = (int)((rt.anchorMin.x - 0.25f) * 2f);
+				if(Mathf.Abs(rt.anchorMin.x - 0.5f) < 0.01f) player = -1;
 				moved = true;
 			}
 		}else moved = false;
