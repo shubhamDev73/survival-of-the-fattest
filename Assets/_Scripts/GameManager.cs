@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	public static int[] players = new int[2];
+	public static int[] playerNumber = new int[2];
+	public static int[] scores = new int[2];
 
 	void Start () {
 		foreach(Player player in FindObjectsOfType<Player>()){

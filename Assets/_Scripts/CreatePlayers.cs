@@ -38,6 +38,7 @@ public class CreatePlayers : MonoBehaviour {
 		rt.localScale = new Vector3(1, 1, 1);
 		rt.GetComponent<Text>().text = "Player " + count.ToString();
 		rt.GetComponent<SelectAnimal>().joystickNumber = joystickNumber;
+		rt.GetComponent<SelectAnimal>().playerNumber = count;
 	}
 
 }

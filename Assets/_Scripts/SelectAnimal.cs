@@ -6,6 +6,8 @@ public class SelectAnimal : MonoBehaviour {
 	[@HideInInspector]
 	public int joystickNumber;
 	[@HideInInspector]
+	public int playerNumber;
+	[@HideInInspector]
 	public int player = -1;
 
 	private bool moved;

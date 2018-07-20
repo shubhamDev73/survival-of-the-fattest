@@ -22,6 +22,7 @@ public class UI : MonoBehaviour {
 						return;
 
 				GameManager.players[script.player] = script.joystickNumber;
+				GameManager.playerNumber[script.player] = script.playerNumber;
 				selectedPlayers[count] = script.player;
 				count++;
 			}

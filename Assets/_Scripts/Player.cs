@@ -41,6 +41,7 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 		scoreText.text = "Score: " + score.ToString();
+		GameManager.scores[gameObject.name == "Cow" ? 0 : 1] = score;
 		if(Time.timeScale == 0) return;
 
 		// shoot
