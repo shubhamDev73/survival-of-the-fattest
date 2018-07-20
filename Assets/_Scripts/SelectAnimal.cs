@@ -14,15 +14,19 @@ public class SelectAnimal : MonoBehaviour {
 		if(Mathf.Abs(Input.GetAxis("Horizontal Player" + joystickNumber.ToString())) > 0.01f){
 			if(!moved){
 				RectTransform rt = GetComponent<RectTransform>();
+
+				// left
 				if(Input.GetAxis("Horizontal Player" + joystickNumber.ToString()) < 0){
 					rt.anchorMin = new Vector2(Mathf.Clamp(rt.anchorMin.x - 0.25f, 0.25f, 0.5f), rt.anchorMin.y);
 					rt.anchorMax = new Vector2(Mathf.Clamp(rt.anchorMax.x - 0.25f, 0.25f, 0.5f), rt.anchorMax.y);
-					rt.anchoredPosition = new Vector2(0, 0);
+					rt.anchoredPosition = Vector2.zero;
 				}
+
+				// right
 				if(Input.GetAxis("Horizontal Player" + joystickNumber.ToString()) > 0){
 					rt.anchorMin = new Vector2(Mathf.Clamp(rt.anchorMin.x + 0.25f, 0.5f, 0.75f), rt.anchorMin.y);
 					rt.anchorMax = new Vector2(Mathf.Clamp(rt.anchorMax.x + 0.25f, 0.5f, 0.75f), rt.anchorMax.y);
-					rt.anchoredPosition = new Vector2(0, 0);
+					rt.anchoredPosition = Vector2.zero;
 				}
 				player = (int)((rt.anchorMin.x - 0.25f) * 2f);
 				if(Mathf.Abs(rt.anchorMin.x - 0.5f) < 0.01f) player = -1;

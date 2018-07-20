@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
+		scoreText.text = "Score: " + score.ToString();
 		if(Time.timeScale == 0) return;
 
 		// shoot
@@ -53,10 +54,11 @@ public class Player : MonoBehaviour {
 			Spawn(bulletSpeed * 2, 30);
 			scale -= new Vector3(0.25f, 0.25f, 0.25f);
 		}
+
+		// die due to shrinking
 		if(scale.x <= 0.4f){
 			Die();
 		}
-		scoreText.text = "Score: " + score.ToString();
 	}
 
 	void Spawn (float bulletSpeed, float mass) {

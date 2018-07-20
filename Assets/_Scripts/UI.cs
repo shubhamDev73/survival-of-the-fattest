@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class UI : MonoBehaviour {
+
+	public GameObject menu, animal, playButton;
 
 	public void LoadLevel (string level) {
 		if(level == "Game"){
@@ -28,15 +30,20 @@ public class UI : MonoBehaviour {
 				if(selectedPlayers[i] == -1)
 					return;
 		}
-		SceneManager.LoadScene(level);
+		if(Time.timeScale == 1) StartCoroutine(FindObjectOfType<TransitionManager>().TransitionTo(level));
 	}
 
-	public void Animal () {
-		transform.GetChild(0).gameObject.SetActive(false);
-		transform.GetChild(1).gameObject.SetActive(true);
-		transform.GetChild(1).GetComponent<CreatePlayers>().Initialize();
+	public void SelectAnimal () {
+		menu.SetActive(false);
+		animal.SetActive(true);
+		animal.GetComponent<CreatePlayers>().Initialize();
 	}
 
+	public void RemoveAnimal () {
+		menu.SetActive(true);
+		animal.SetActive(false);
+		FindObjectOfType<EventSystem>().SetSelectedGameObject(playButton);
+	}
 	public void Quit () {
 		Application.Quit();
 	}

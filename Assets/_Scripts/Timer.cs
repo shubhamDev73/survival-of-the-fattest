@@ -9,6 +9,10 @@ public class Timer : MonoBehaviour {
 
 	void Start () {
 		text = GetComponent<Text>();
+		text.text = "Time: " + timer;
+	}
+
+	public void Execute () {
 		StartCoroutine("TimeExecute");
 		text.text = "Time: " + timer;
 	}
@@ -16,8 +20,8 @@ public class Timer : MonoBehaviour {
 	IEnumerator TimeExecute () {
 		yield return new WaitForSeconds(1f);
 		timer--;
-		if(timer == 0) Time.timeScale = 0;
-		Start();
+		if(timer == 0) StartCoroutine(FindObjectOfType<TransitionManager>().TransitionTo("End"));
+		Execute();
 	}
 
 }
