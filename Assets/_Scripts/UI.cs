@@ -26,10 +26,6 @@ public class UI : MonoBehaviour {
 				selectedPlayers[count] = script.player;
 				count++;
 			}
-			for(int i = 0; i < selectedPlayers.Length; i++)
-				// some animal is left out
-				if(selectedPlayers[i] == -1)
-					return;
 		}
 		if(Time.timeScale == 1) StartCoroutine(FindObjectOfType<TransitionManager>().TransitionTo(level));
 	}

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
-	public int player;
+	public int player = 0;
 	public GameObject bulletPrefab;
 	public Transform spawnPoint, respawnPoint;
 	public Vector3 bulletDirection;
@@ -17,12 +17,12 @@ public class Player : MonoBehaviour {
 	[@HideInInspector]
 	public GameObject shooter;
 
-	private float speed, bulletSpeed = 2000f;
+	private float speed, bulletSpeed = 2000, h, v, finalX, finalZ;
 	private Rigidbody rb;
+	private int count, rof = 50;
 
 	void Start () {
 		score = 0;
-		scale = transform.localScale;
 		rb = GetComponent<Rigidbody>();
 		foreach(Player player in FindObjectsOfType<Player>()){
 			if(player.gameObject != gameObject){
@@ -30,20 +30,39 @@ public class Player : MonoBehaviour {
 				break;
 			}
 		}
+		Initialize();
 	}
 
 	void FixedUpdate () {
+		if(player == 0) AIFixedUpdate();
+		else PlayerFixedUpdate();
+
 		speed = 300 - transform.localScale.x * 100;
-		rb.AddForce(new Vector3(Input.GetAxis("Horizontal Player" + player.ToString()) * speed, 0, Input.GetAxis("Vertical Player" + player.ToString()) * speed), ForceMode.Acceleration);
 		transform.localScale = Vector3.Lerp(transform.localScale, scale, (transform.localScale - scale).magnitude * 0.5f);
 		transform.position = new Vector3(transform.position.x, transform.localScale.x/2, transform.position.z);
 	}
 
 	void Update () {
-		scoreText.text = "Score: " + score.ToString();
-		GameManager.scores[gameObject.name == "Cow" ? 0 : 1] = score;
 		if(Time.timeScale == 0) return;
 
+		if(player == 0) AIUpdate();
+		else PlayerUpdate();
+
+		scoreText.text = "Score: " + score.ToString();
+		GameManager.scores[gameObject.name == "Cow" ? 0 : 1] = score;
+
+		// die due to shrinking
+		if(scale.x <= 0.4f){
+			Die();
+		}
+	}
+
+	// player
+	void PlayerFixedUpdate () {
+		rb.AddForce(new Vector3(Input.GetAxis("Horizontal Player" + player.ToString()) * speed, 0, Input.GetAxis("Vertical Player" + player.ToString()) * speed), ForceMode.Acceleration);
+	}
+
+	void PlayerUpdate () {
 		// shoot
 		if(Input.GetKeyDown(player > 10 ? (player == 11 ? "space" : "return") : ("joystick " + player.ToString() + " button 2"))){
 			Spawn(bulletSpeed, 2);
@@ -55,10 +74,40 @@ public class Player : MonoBehaviour {
 			Spawn(bulletSpeed * 2, 30);
 			scale -= new Vector3(0.25f, 0.25f, 0.25f);
 		}
+	}
 
-		// die due to shrinking
-		if(scale.x <= 0.4f){
-			Die();
+	// AI
+	void AIFixedUpdate () {
+		if(Mathf.Abs(transform.position.x - finalX) < 1f){
+			h = Random.value > 0.8f ? (shooter.transform.position.x - transform.position.x) : (Random.value - 0.5f) * 4f;
+			while(Mathf.Abs(transform.position.x + h) > 6) h -= Random.value * Mathf.Sign(transform.position.x + h);
+			finalX = transform.position.x + h;
+		}
+		if(Mathf.Abs(transform.position.z - finalZ) < 1f){
+			v = Mathf.Abs(transform.position.z) > 8 ? Mathf.Sign(transform.position.z) * -2f : (Random.value - 0.5f) * 3f;
+			finalZ = transform.position.z + v;
+		}
+		rb.AddForce(new Vector3(h * speed / 7, 0, v * speed / 7), ForceMode.Acceleration);
+	}
+
+	void AIUpdate () {
+		// shoot
+		if(Mathf.Abs(shooter.transform.position.x - transform.position.x) < 5){
+			if(count > rof){
+				if(Random.value < 0.5f){
+					Spawn(bulletSpeed, 2);
+					scale -= new Vector3(0.05f, 0.05f, 0.05f);
+					count = 0;
+				}
+
+				// charged shoot
+				if(scale.x > 0.75f && Random.value > 0.9f){
+					Spawn(bulletSpeed * 2, 30);
+					scale -= new Vector3(0.25f, 0.25f, 0.25f);
+					count = 0;
+				}
+			}
+			count++;
 		}
 	}
 
@@ -96,9 +145,16 @@ public class Player : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 		rb.velocity = Vector3.zero;
 		transform.localScale = new Vector3(1, 1, 1);
-		scale = transform.localScale;
 		transform.position = respawnPoint.position;
+		Initialize();
 		rb.AddForce(new Vector3(Random.Range(3000f, 7000f), 0, 0), ForceMode.Acceleration);
+	}
+
+	void Initialize () {
+		scale = transform.localScale;
+		finalX = transform.position.x;
+		finalZ = transform.position.z;
+		count = 0;
 	}
 
 }

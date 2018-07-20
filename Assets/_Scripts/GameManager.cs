@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	public static int[] players = new int[2];
-	public static int[] playerNumber = new int[2];
+	public static int[] players = new int[2] {11, 0};
+	public static int[] playerNumber = new int[2] {0, 0};
 	public static int[] scores = new int[2];
 
 	void Start () {
