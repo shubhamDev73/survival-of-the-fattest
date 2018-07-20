@@ -24,6 +24,12 @@ public class Player : MonoBehaviour {
 		score = 0;
 		scale = transform.localScale;
 		rb = GetComponent<Rigidbody>();
+		foreach(Player player in FindObjectsOfType<Player>()){
+			if(player.gameObject != gameObject){
+				shooter = player.gameObject;
+				break;
+			}
+		}
 	}
 
 	void FixedUpdate () {
@@ -73,6 +79,9 @@ public class Player : MonoBehaviour {
 
 	void Die () {
 		transform.position = new Vector3(1000, 1000, 1000);
+		rb.velocity = Vector3.zero;
+		transform.localScale = new Vector3(1, 1, 1);
+		scale = transform.localScale;
 		StartCoroutine("Respawn");
 	}
 
