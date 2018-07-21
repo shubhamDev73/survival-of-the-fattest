@@ -19,7 +19,10 @@ public class Player : MonoBehaviour {
 
 	private float speed, bulletSpeed = 2000, h, v, finalX, finalZ;
 	private Rigidbody rb;
-	private int count, rof = 50;
+
+	// AI
+	private int shots, rof = 50;
+	private float chaseProbability, shootProbability, chargeProbability;
 
 	void Start () {
 		score = 0;
@@ -31,11 +34,30 @@ public class Player : MonoBehaviour {
 			}
 		}
 		Initialize();
+
+		// managing difficulties
+		switch(GameManager.difficulty){
+			case GameManager.Difficulty.Easy:
+				chaseProbability = 0.1f;
+				shootProbability = 0.3f;
+				chargeProbability = 0.05f;
+				break;
+			case GameManager.Difficulty.Medium:
+				chaseProbability = 0.2f;
+				shootProbability = 0.5f;
+				chargeProbability = 0.1f;
+				break;
+			case GameManager.Difficulty.Hard:
+				chaseProbability = 0.3f;
+				shootProbability = 0.8f;
+				chargeProbability = 0.3f;
+				break;
+		}
 	}
 
 	void FixedUpdate () {
-		if(player == 0) AIFixedUpdate();
-		else PlayerFixedUpdate();
+		if(player == 0) AIMove();
+		else PlayerMove();
 
 		speed = 300 - transform.localScale.x * 100;
 		transform.localScale = Vector3.Lerp(transform.localScale, scale, (transform.localScale - scale).magnitude * 0.5f);
@@ -45,8 +67,8 @@ public class Player : MonoBehaviour {
 	void Update () {
 		if(Time.timeScale == 0) return;
 
-		if(player == 0) AIUpdate();
-		else PlayerUpdate();
+		if(player == 0) AIShoot();
+		else PlayerShoot();
 
 		scoreText.text = "Score: " + score.ToString();
 		GameManager.scores[gameObject.name == "Cow" ? 0 : 1] = score;
@@ -58,11 +80,11 @@ public class Player : MonoBehaviour {
 	}
 
 	// player
-	void PlayerFixedUpdate () {
+	void PlayerMove () {
 		rb.AddForce(new Vector3(Input.GetAxis("Horizontal Player" + player.ToString()) * speed, 0, Input.GetAxis("Vertical Player" + player.ToString()) * speed), ForceMode.Acceleration);
 	}
 
-	void PlayerUpdate () {
+	void PlayerShoot () {
 		// shoot
 		if(Input.GetKeyDown(player > 10 ? (player == 11 ? "space" : "return") : ("joystick " + player.ToString() + " button 2"))){
 			Spawn(bulletSpeed, 2);
@@ -77,37 +99,37 @@ public class Player : MonoBehaviour {
 	}
 
 	// AI
-	void AIFixedUpdate () {
+	void AIMove () {
 		if(Mathf.Abs(transform.position.x - finalX) < 1f){
-			h = Random.value > 0.8f ? (shooter.transform.position.x - transform.position.x) : (Random.value - 0.5f) * 4f;
+			h = (Random.value < chaseProbability && shooter.transform.position.x < 500) ? (shooter.transform.position.x - transform.position.x) : (Random.value - 0.5f) * 4f;
 			while(Mathf.Abs(transform.position.x + h) > 6) h -= Random.value * Mathf.Sign(transform.position.x + h);
 			finalX = transform.position.x + h;
 		}
 		if(Mathf.Abs(transform.position.z - finalZ) < 1f){
-			v = Mathf.Abs(transform.position.z) > 8 ? Mathf.Sign(transform.position.z) * -2f : (Random.value - 0.5f) * 3f;
+			v = Mathf.Abs(transform.position.z) > 8 ? Mathf.Sign(transform.position.z) * -1f : (Random.value - 0.5f) * 2f;
 			finalZ = transform.position.z + v;
 		}
 		rb.AddForce(new Vector3(h * speed / 7, 0, v * speed / 7), ForceMode.Acceleration);
 	}
 
-	void AIUpdate () {
+	void AIShoot () {
 		// shoot
 		if(Mathf.Abs(shooter.transform.position.x - transform.position.x) < 5){
-			if(count > rof){
-				if(Random.value < 0.5f){
+			if(shots > rof){
+				if(Random.value < shootProbability){
 					Spawn(bulletSpeed, 2);
 					scale -= new Vector3(0.05f, 0.05f, 0.05f);
-					count = 0;
+					shots = 0;
 				}
 
 				// charged shoot
-				if(scale.x > 0.75f && Random.value > 0.9f){
+				if(scale.x > 0.75f && Random.value < chargeProbability){
 					Spawn(bulletSpeed * 2, 30);
 					scale -= new Vector3(0.25f, 0.25f, 0.25f);
-					count = 0;
+					shots = 0;
 				}
 			}
-			count++;
+			shots++;
 		}
 	}
 
@@ -154,7 +176,7 @@ public class Player : MonoBehaviour {
 		scale = transform.localScale;
 		finalX = transform.position.x;
 		finalZ = transform.position.z;
-		count = 0;
+		shots = 0;
 	}
 
 }
