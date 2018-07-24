@@ -1,6 +1,6 @@
 WindowsStandalone
 PlayerPath?
-C:/Users/Shubham/Desktop/Me/Games/Builds/Survival of the Fattest/Survival of the Fattest.exe
+G:/GAME COMPANY/Survival of the Fattest/Game files/Build/Build.exe
 SceneListBegin?
 Assets/_Scenes/Home.unity
 Assets/_Scenes/Game.unity
