@@ -1,1 +1,1 @@
-Quick project made as a test befor Ludum Dare
+Quick project made as a test before Ludum Dare
