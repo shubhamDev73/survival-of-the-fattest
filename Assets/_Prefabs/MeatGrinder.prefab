@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4550334422611688}
   - component: {fileID: 33830602481914402}
   - component: {fileID: 23849082840277992}
+  - component: {fileID: 65729029359483712}
   m_Layer: 0
   m_Name: MeatGrinder
   m_TagString: Untagged
@@ -157,6 +158,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1646965206766732}
   m_Mesh: {fileID: 4300002, guid: fe44a643d2990384a989162cf2900900, type: 3}
+--- !u!65 &65729029359483712
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1912147214929814}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 30, y: 10, z: 10}
+  m_Center: {x: 0, y: 5, z: 1.25}
 --- !u!95 &95988252409517984
 Animator:
   serializedVersion: 3
