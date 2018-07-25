@@ -2,8 +2,10 @@
 
 public class Bullet : MonoBehaviour {
 
-	public GameObject shooter;
 	public GameObject explosionPrefab;
+
+	[@HideInInspector]
+	public GameObject shooter;
 
 	void OnCollisionStay (Collision col) {
 		if(col.gameObject != shooter){

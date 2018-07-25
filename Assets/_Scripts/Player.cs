@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 
 	public int player = 0;
 	public GameObject bulletPrefab;
-	public Transform spawnPoint, respawnPoint;
+	public Transform bulletSpawnPoint, respawnPoint;
 	public Vector3 bulletDirection;
 	public Text scoreText;
 
@@ -17,8 +17,9 @@ public class Player : MonoBehaviour {
 	[@HideInInspector]
 	public GameObject shooter;
 
-	private float speed, bulletSpeed = 2000, h, v, finalX, finalZ;
+	private float speed, bulletSpeed = 5000, h, v, finalX, finalZ;
 	private Rigidbody rb;
+	private Vector3 initialScale;
 
 	// AI
 	private int shots, rof = 50;
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour {
 				break;
 			}
 		}
+		initialScale = transform.localScale;
 		Initialize();
 
 		// managing difficulties
@@ -60,8 +62,8 @@ public class Player : MonoBehaviour {
 		else PlayerMove();
 
 		speed = 300 - transform.localScale.x * 100;
+		scale = new Vector3(Mathf.Clamp(scale.x, 0, 3), Mathf.Clamp(scale.y, 0, 3), Mathf.Clamp(scale.z, 0, 3));
 		transform.localScale = Vector3.Lerp(transform.localScale, scale, (transform.localScale - scale).magnitude * 0.5f);
-		transform.position = new Vector3(transform.position.x, transform.localScale.x/2, transform.position.z);
 	}
 
 	void Update () {
@@ -135,7 +137,7 @@ public class Player : MonoBehaviour {
 
 	void Spawn (float bulletSpeed, float mass) {
 		GameObject bullet = Instantiate(bulletPrefab);
-		bullet.transform.position = spawnPoint.position;
+		bullet.transform.position = bulletSpawnPoint.position;
 		bullet.GetComponent<Bullet>().shooter = gameObject;
 		Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GameObject.Find("Divider").GetComponent<Collider>());
 		bullet.GetComponent<Rigidbody>().mass = mass;
@@ -150,7 +152,7 @@ public class Player : MonoBehaviour {
 				Die();
 				break;
 			case "Farm":
-				rb.AddForce(rb.velocity * -3, ForceMode.VelocityChange);
+				if(rb.velocity.sqrMagnitude < 1000) rb.AddForce(rb.velocity * -3, ForceMode.VelocityChange);
 				break;
 		}
 	}
@@ -158,18 +160,19 @@ public class Player : MonoBehaviour {
 	void Die () {
 		transform.position = new Vector3(1000, 1000, 1000);
 		rb.velocity = Vector3.zero;
-		transform.localScale = new Vector3(1, 1, 1);
+		transform.localScale = initialScale;
 		scale = transform.localScale;
+		respawnPoint.GetComponent<Spawn>().TurnOn();
 		StartCoroutine("Respawn");
 	}
 
 	IEnumerator Respawn () {
 		yield return new WaitForSeconds(0.5f);
 		rb.velocity = Vector3.zero;
-		transform.localScale = new Vector3(1, 1, 1);
+		transform.localScale = initialScale;
 		transform.position = respawnPoint.position;
 		Initialize();
-		rb.AddForce(new Vector3(Random.Range(3000f, 7000f), 0, 0), ForceMode.Acceleration);
+		rb.AddForce(new Vector3(Random.Range(7000f, 18000f), 0, 0), ForceMode.Acceleration);
 	}
 
 	void Initialize () {
